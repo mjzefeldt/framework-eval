@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
 
 // initial state
 const initialState = {
@@ -51,11 +50,7 @@ export default function configureStore() {
   const store = createStore(
     reducer, 
     initialState, 
-    composeWithDevTools(
-      applyMiddleware(
-        thunkMiddleware
-      )
-    )
+    applyMiddleware(thunkMiddleware)
   );
   return store;
 }
