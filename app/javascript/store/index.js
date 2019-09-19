@@ -4,17 +4,23 @@ import thunkMiddleware from 'redux-thunk';
 // initial state
 const initialState = {
   frameworks: [],
-  submittedVote: false,
+  submittedVote: false, 
   voteTotals: [],
   //sorting info
 }
 
 // action types
 const GET_FRAMEWORKS = 'GET_FRAMEWORKS';
+const GET_VOTE_TOTALS = 'GET_VOTE_TOTALS';
 
 // action creators
 const getFrameworks = data => ({
   type: GET_FRAMEWORKS,
+  data
+})
+
+const getVoteTotals = data => ({
+  type: GET_VOTE_TOTALS,
   data
 })
 
@@ -36,11 +42,26 @@ export const fetchFrameworks = () => {
   }
 }
 
+export const fetchVoteTotals = () => {
+  return (dispatch) => {
+    fetch('/v1/frameworks')
+    .then(v => v.json())
+    .then(votes => {
+      console.log(JSON.stringify(votes), '<<< votes from frameworks api');
+      dispatch(getVoteTotals(votes))
+    }).catch(err => {
+      console.log('Error:', err);
+    });
+  }
+}
+
 // reducer
 function reducer(state = initialState, action) {
   switch(action.type) {
     case GET_FRAMEWORKS:
       return { ...state, frameworks: action.data};
+    case GET_VOTE_TOTALS:
+      return { ...state, voteTotals: action.data};
     default:
       return state;
   }
