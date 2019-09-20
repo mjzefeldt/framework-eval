@@ -24,14 +24,13 @@ const getVoteTotals = data => ({
   data
 })
 
+const headers = {
+  headers: {
+    authorization: `token ${process.env.GITHUB_TOKEN_SECRET}`
+  }
+}
 // thunk creator
 export const fetchFrameworks = () => {
-  // const frameworks = store.getState().frameworks;
-  // console.log(frameworks, '<<< frameworks in store index')
-  const headers = {
-    headers: {
-    }
-  }
   return (dispatch) => {
     Promise.all([
       fetch('https://api.github.com/repos/facebook/react', headers).then(f => f.json()),
@@ -40,7 +39,6 @@ export const fetchFrameworks = () => {
       fetch('https://api.github.com/repos/vuejs/vue', headers).then(f => f.json())
     ]).then(frameworks => {
       // grab ETag info for each fetch
-      // use token...need to config webpack...
       dispatch(getFrameworks(frameworks))
     }).catch(err => {
       console.log('Error:', err);
@@ -53,7 +51,6 @@ export const fetchVoteTotals = () => {
     fetch('/v1/frameworks')
     .then(v => v.json())
     .then(votes => {
-      // console.log(JSON.stringify(votes), '<<< votes from frameworks api');
       dispatch(getVoteTotals(votes))
     }).catch(err => {
       console.log('Error:', err);
@@ -81,13 +78,3 @@ export default function configureStore() {
   );
   return store;
 }
-
-// const store = createStore(
-//   reducer, 
-//   initialState, 
-//   applyMiddleware(thunkMiddleware)
-// );
-
-// export default function configureStore() {
-//   return store;
-// }
