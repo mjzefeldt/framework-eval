@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk';
 // initial state
 const initialState = {
   frameworks: [],
-  submittedVote: false, 
+  submittedVote: false, // figure this out
   voteTotals: [],
   //sorting info
 }
@@ -26,15 +26,21 @@ const getVoteTotals = data => ({
 
 // thunk creator
 export const fetchFrameworks = () => {
+  // const frameworks = store.getState().frameworks;
+  // console.log(frameworks, '<<< frameworks in store index')
+  const headers = {
+    headers: {
+    }
+  }
   return (dispatch) => {
     Promise.all([
-      fetch('https://api.github.com/repos/facebook/react').then(f => f.json()),
-      fetch('https://api.github.com/repos/angular/angular').then(f => f.json()),
-      fetch('https://api.github.com/repos/emberjs/ember').then(f => f.json()),
-      fetch('https://api.github.com/repos/vuejs/vue').then(f => f.json())
+      fetch('https://api.github.com/repos/facebook/react', headers).then(f => f.json()),
+      fetch('https://api.github.com/repos/angular/angular', headers).then(f => f.json()),
+      fetch('https://api.github.com/repos/emberjs/ember', headers).then(f => f.json()),
+      fetch('https://api.github.com/repos/vuejs/vue', headers).then(f => f.json())
     ]).then(frameworks => {
-      // console.log(JSON.stringify(frameworks), '<<<frameworks in thunk before dispatch');
       // grab ETag info for each fetch
+      // use token...need to config webpack...
       dispatch(getFrameworks(frameworks))
     }).catch(err => {
       console.log('Error:', err);
@@ -75,3 +81,13 @@ export default function configureStore() {
   );
   return store;
 }
+
+// const store = createStore(
+//   reducer, 
+//   initialState, 
+//   applyMiddleware(thunkMiddleware)
+// );
+
+// export default function configureStore() {
+//   return store;
+// }

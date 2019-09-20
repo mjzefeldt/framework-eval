@@ -10,9 +10,9 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // filters: {},
-      sessionFrameworkVote: '',
-      voteOnceWarning: false,
+      // filters: {}, // figure this out
+      sessionFrameworkVote: '', // figure this out
+      voteOnceWarning: false, // figure this out
     }
     this.handleVoteClick = this.handleVoteClick.bind(this);
   }
@@ -21,10 +21,15 @@ class Dashboard extends Component {
     this._isMounted = true; // if this then make call...
     this.props.retrieveFrameworks();
     this.props.retrieveVoteTotals();
+    // this.dataPolling = setInterval(() => { // start data polling
+    //   this.props.retrieveFrameworks();
+    //   }, 10000
+    // );
   }
 
   componentWillUnmount() {
-    this._isMounted = false; 
+    this._isMounted = false;
+    // clearInterval(this.dataPolling); // stop data polling
   }
 
   handleVoteClick(e) {
@@ -104,5 +109,4 @@ Dashboard.propTypes = {
   greeting: PropTypes.string
 };
 
-// export default Dashboard
 export default connect(mapState, mapDispatch)(Dashboard);

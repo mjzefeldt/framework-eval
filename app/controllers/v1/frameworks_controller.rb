@@ -16,7 +16,7 @@ class V1::FrameworksController < ApplicationController
 
   def create
     if current_user && params[:framework].present?
-      if session[:voted] && session[:voted] == true # don't create if already voted this session
+      if session[:voted] && session[:voted] == true
         render json: {}, status: :too_many_requests
         return
       else
