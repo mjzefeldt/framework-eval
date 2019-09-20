@@ -33,7 +33,7 @@ export const fetchFrameworks = () => {
       fetch('https://api.github.com/repos/emberjs/ember').then(f => f.json()),
       fetch('https://api.github.com/repos/vuejs/vue').then(f => f.json())
     ]).then(frameworks => {
-      console.log(JSON.stringify(frameworks), '<<<frameworks in thunk before dispatch');
+      // console.log(JSON.stringify(frameworks), '<<<frameworks in thunk before dispatch');
       // grab ETag info for each fetch
       dispatch(getFrameworks(frameworks))
     }).catch(err => {
@@ -47,7 +47,7 @@ export const fetchVoteTotals = () => {
     fetch('/v1/frameworks')
     .then(v => v.json())
     .then(votes => {
-      console.log(JSON.stringify(votes), '<<< votes from frameworks api');
+      // console.log(JSON.stringify(votes), '<<< votes from frameworks api');
       dispatch(getVoteTotals(votes))
     }).catch(err => {
       console.log('Error:', err);

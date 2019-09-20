@@ -11,6 +11,8 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       // filters: {},
+      sessionFrameworkVote: '',
+      voteOnceWarning: false,
     }
     this.handleVoteClick = this.handleVoteClick.bind(this);
   }
@@ -26,38 +28,41 @@ class Dashboard extends Component {
   }
 
   handleVoteClick(e) {
-    // e.value // or something like that - take in id of element passing in
+    // e.target.value // or something like that - take in id of element passing in
     const bodyData = {framework: {id: 10270250}};
-
+    // console.log(e, '<<<e')
     e.preventDefault();
-    console.log('hitting handleVoteClick');
+    // console.log('hitting handleVoteClick');
     fetch('/v1/frameworks', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bodyData)
     }).then(res => {
-      console.log(JSON.stringify(res), '<<<res from post');
+      // console.log(JSON.stringify(res), '<<<res from post');
+      this.props.retrieveVoteTotals(); // refresh vote_totals...
+      // this.setState({session_vote: })
     }).catch(err => {
       console.log('Error:', err);
     });
   }
 
   render () {
-    const frameworks = this.props.frameworks.reduce((acc, cur) => {
-      const newObj = {
-        id: cur.id,
-        name: cur.name,
-        size: cur.size,
-        watchers_count: cur.watchers_count,
-        open_issues_count: cur.open_issues_count
-      }
-      const countObj = this.props.voteTotals.find(f => f.framework_id === cur.id);
-      countObj.vote_total? newObj['vote_count'] = countObj.vote_total : newObj['vote_count'] = 0;
-      acc.push(newObj);
-      return acc;
-    }, []);
+    let frameworks = this.props.frameworks; // let frameworks = [] as default;
+    if (this.props.frameworks.length && this.props.voteTotals.length) {
+      frameworks = this.props.frameworks.reduce((acc, cur) => {
+        const newObj = {
+          id: cur.id,
+          name: cur.name,
+          size: cur.size,
+          watchers_count: cur.watchers_count,
+          open_issues_count: cur.open_issues_count
+        }
+        const countObj = this.props.voteTotals.find(f => f.framework_id === cur.id);
+        countObj.vote_total? newObj['vote_count'] = countObj.vote_total : newObj['vote_count'] = 0;
+        acc.push(newObj);
+        return acc;
+      }, []);
+    }
 
     const frameWorkList = frameworks.map((framework) => 
       <div key={framework.id} className="single-f-wrapper">
@@ -78,7 +83,7 @@ class Dashboard extends Component {
             {frameWorkList}
           </div>
           {/* <Button>Vote</Button> */}
-          <button type="button" onClick={this.handleVoteClick}>Vote</button>
+          <button type="button" onClick={(e) => this.handleVoteClick(e)}>Vote</button>
         </div>
       </Fragment>
     );
