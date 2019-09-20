@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { fetchFrameworks, fetchVoteTotals } from '../store';
-// import { Button } from 'semantic-ui-react';
+import FrameworkList from './FrameworkList';
 
 class Dashboard extends Component {
   _isMounted = false;
@@ -10,9 +10,8 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // filters: {}, // figure this out
-      sessionFrameworkVote: '', // figure this out
-      voteOnceWarning: false, // figure this out
+      //sessionFrameworkVote: '', // figure this out
+      //voteOnceWarning: false, // figure this out
     }
     this.handleVoteClick = this.handleVoteClick.bind(this);
   }
@@ -32,9 +31,9 @@ class Dashboard extends Component {
     // clearInterval(this.dataPolling); // stop data polling
   }
 
-  handleVoteClick(e) {
+  handleVoteClick(id, e) {
     // e.target.value // or something like that - take in id of element passing in
-    const bodyData = {framework: {id: 10270250}};
+    const bodyData = {framework: {id}}; //id: 10270250
     // console.log(e, '<<<e')
     e.preventDefault();
     // console.log('hitting handleVoteClick');
@@ -68,27 +67,16 @@ class Dashboard extends Component {
         return acc;
       }, []);
     }
-
-    const frameWorkList = frameworks.map((framework) => 
-      <div key={framework.id} className="single-f-wrapper">
-        <div>{framework.id}</div>
-        <div>{framework.name}</div>
-        <div>Size: {framework.size}</div>
-        <div>Watchers: {framework.watchers_count}</div>
-        <div>Open Issues: {framework.open_issues_count}</div>
-        <div>Total Votes: {framework.vote_count}</div>
-      </div> 
-    );
     return (
       <Fragment>
         <div className="dashboard-container">
-          {this.props.greeting}
           {frameworks.length < 1 && <h1>LOADING...</h1>}
           <div className="frameworks-container">
-            {frameWorkList}
+            <FrameworkList 
+              frameworks={frameworks}
+              clickHandler={this.handleVoteClick}
+            />
           </div>
-          {/* <Button>Vote</Button> */}
-          <button type="button" onClick={(e) => this.handleVoteClick(e)}>Vote</button>
         </div>
       </Fragment>
     );
@@ -105,8 +93,8 @@ const mapDispatch = dispatch => ({
   retrieveVoteTotals: () => dispatch(fetchVoteTotals())
 });
 
-Dashboard.propTypes = {
-  greeting: PropTypes.string
-};
+// Dashboard.propTypes = {
+//   greeting: PropTypes.string
+// };
 
 export default connect(mapState, mapDispatch)(Dashboard);
