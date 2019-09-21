@@ -3,7 +3,6 @@ import { Redirect } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 
 class Header extends Component {
-  //to do handle logout
   constructor(props) {
     super(props);
     this.state = {
@@ -14,22 +13,19 @@ class Header extends Component {
 
   handleLogOut(e) {
     e.preventDefault();
-    this.setState({loggedin: false})
-    // fetch('/logout', {
-    //   // method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' }
-    //   // body: JSON.stringify(bodyData)
-    // }).then(res => {
-    //   console.log(res, '<<<loggedout')
-    //   // this.props.retrieveVoteTotals();
-    // }).catch(err => {
-    //   console.log('Error:', err);
-    // });
+    fetch('/sign_out', {
+      method: 'GET', // not restful - revisit when revisit use of devise
+      headers: { 'Content-Type': 'application/json' }
+    }).then(res => {
+      this.setState({loggedin: false})
+    }).catch(err => {
+      console.log('Error:', err);
+    });
   }
 
   render () {
     if (this.state.loggedin === false) {
-      return <Redirect to="/logout" />
+      return <Redirect to="/login" />
     }
     return (
       <Fragment>

@@ -1,7 +1,6 @@
 class V1::FrameworksController < ApplicationController
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
-  # before_action :authenticate_user!
 
   def index
     puts 'hitting get(index) endpoint'
@@ -33,5 +32,14 @@ class V1::FrameworksController < ApplicationController
       render json: {}, status: :bad_request
       return
     end
+  end
+
+  def check_vote
+    if session[:voted] && session[:voted] == true
+      voted = true
+    else
+      voted = false
+    end
+    render json: voted, status: :ok
   end
 end

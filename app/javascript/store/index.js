@@ -38,7 +38,6 @@ export const fetchFrameworks = () => {
       fetch('https://api.github.com/repos/emberjs/ember', headers).then(f => f.json()),
       fetch('https://api.github.com/repos/vuejs/vue', headers).then(f => f.json())
     ]).then(frameworks => {
-      // grab ETag info for each fetch
       dispatch(getFrameworks(frameworks))
     }).catch(err => {
       console.log('Error:', err);

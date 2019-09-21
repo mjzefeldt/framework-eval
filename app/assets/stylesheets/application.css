@@ -55,11 +55,11 @@
   }
 
   h1 {
-    font-size: 3em;
+    font-size: 2em;
   }
 
   h2 {
-    font-size: 2em;
+    font-size: 1.25em;
   }
 
   .dashboard-container {
@@ -85,6 +85,10 @@
     min-width: 300px;
   }
 
+  .rank-label {
+    color: yellow;
+  }
+
   .sm-label {
     font-size: 1.5em;
     color: #707070;
@@ -92,4 +96,27 @@
 
   .data {
     font-size: 3em;
+  }
+
+  /* login specific */
+  .login-box {
+    background-color: #FEFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    border-color: #222629;
+    margin-top: 25px;
+    width: 600px;
+  }
+  
+  .modal-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .list-flex {
+    display: flex;
+    flex-direction: row;
   }

@@ -12,9 +12,9 @@ class App extends Component {
       <Fragment>
       <Provider store={store}>
         <BrowserRouter>
-          <Header />
+          <Header csrfToken={this.props.csrfToken} />
           <Switch>
-            <Route exact path="/" render={() => <Dashboard />} />
+            <Route exact path="/" render={() => <Dashboard csrfToken={this.props.csrfToken} />} />
           </Switch>
         </BrowserRouter>
       </Provider>
