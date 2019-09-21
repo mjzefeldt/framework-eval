@@ -25,12 +25,16 @@ Application continuously displays and updates frontend framework repository usag
 * Heroku for deployment
 * rails new framework-eval --database=postgresql --webpack=react
 
+bundle install
+npm install
+yarn install
+
 Regarding gem 'dotenv-rails' (for env file) - make sure to add to gitignore.
 If new to configuring rails-react, this article is helpful for basic setup: https://www.freecodecamp.org/news/how-to-create-a-rails-project-with-a-react-and-redux-front-end-8b01e17a1db/.
 
 ### Project Status & Challenges
 **Continuously retrieving framework repo data updates sans page refresh**
-Used Fetch API to make ajax calls to Github API v3. Paired Redux with React to persist and hydrate state upon each ajax request made to Github API. Opted to use polling to continuously check for repo updates, every 10 seconds, via a setInterval call initiated in componentDidMount lifecycle method for Dashboard component. To attain a higher rate limit and avoid immediate issues with polling, used dotenv module via webpacker to include secret token to make Github API calls. (update token authorization flakey - removed for now.)
+Used Fetch API to make ajax calls to Github API v3. Paired Redux with React to persist and hydrate state upon each ajax request made to Github API. Opted to use polling to continuously check for repo updates, every 10 seconds, via a setInterval call initiated in componentDidMount lifecycle method for Dashboard component. To attain a higher rate limit and avoid immediate issues with polling, used dotenv module via webpacker to include secret token to make Github API calls. (Built in handling for unauthorization if token fails so app does not crash although does not load data.)
 
 **Authorization and user voting**
 Leveraged devise library to authenticate user and retrieve unique email. Leveraged Rails session tracking to limit user vote to once per session. Upon successful post/creation of vote for a framework, added a vote check property to session within frameworks_controller. Experienced difficulty configuring devise to properly route and some bugs to be worked out. On deployed app, unable to call destroy and currently instead using get request to hit logout endpoint. Logout pushes redirected url login, but does not actually navigate to that end point without a manual browser refresh.

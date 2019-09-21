@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { fetchFrameworks, fetchVoteTotals } from '../store';
 import { Portal, Segment, Button } from 'semantic-ui-react'
@@ -73,8 +73,8 @@ class Dashboard extends Component {
 
   render () {
     let frameworks = this.props.frameworks; // let frameworks = [] as default;
-    if (this.props.frameworks.length > 0 && this.props.voteTotals.length > 0) {
-      // frameworks = this.props.frameworks.reduce((acc, cur) => {
+    let voteTotals = this.props.voteTotals;
+    if (this.props.frameworks.length > 0 && this.props.voteTotals.length > 0) { 
       frameworks = frameworks.reduce((acc, cur) => {
         const newObj = {
           id: cur.id,
@@ -83,9 +83,11 @@ class Dashboard extends Component {
           watchers_count: cur.watchers_count,
           open_issues_count: cur.open_issues_count
         }
-        const countObj = this.props.voteTotals.find(f => f.framework_id === cur.id);
-        countObj.hasOwnProperty('vote_total')? newObj['vote_count'] = countObj.vote_total : newObj['vote_count'] = 0;
-        acc.push(newObj);
+        const countObj = voteTotals.find(f => f.framework_id === cur.id);
+        if (countObj) {
+          countObj.hasOwnProperty('vote_total')? newObj['vote_count'] = countObj.vote_total : newObj['vote_count'] = 0;
+          acc.push(newObj);
+        }
         return acc;
       }, []);
     }
@@ -93,7 +95,6 @@ class Dashboard extends Component {
     const voteMsg = ( <div>No further voting this session.</div>)
     return (
       <div className="dashboard-container">
-        {frameworks.length < 1 && <h1>LOADING...</h1>}
         <Portal onClose={this.handleClose} open={this.state.open}>
           <Segment
             style={{
@@ -120,6 +121,7 @@ class Dashboard extends Component {
             clickHandler={this.handleVoteClick}
             userVoted={this.state.userVoted}
           />
+          {frameworks.length < 1 && <h1>LOADING...</h1>}
         </div>
         {this.state.userVoted && voteMsg}
       </div>

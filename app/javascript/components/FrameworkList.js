@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Grid, Menu, Button, Image, List, Icon } from 'semantic-ui-react'
+import { Grid, Menu, Button, List, Icon } from 'semantic-ui-react'
 class FrameworkList extends Component {
   constructor(props) {
     super(props);
