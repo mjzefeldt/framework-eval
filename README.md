@@ -5,6 +5,12 @@
 ### Description
 Application continuously displays and updates frontend framework repository usage/issue data available via the GitHub API v3. Users must login (authenticate) to view framework repo data and vote for the best framework based on the available data. App limits voting to unique email per session. The frontend frameworks presented are React, Angular, Ember, and Vue.
 
+![Desktop-Image](https://github.com/mjzefeldt/framework-eval/blob/master/framework_evaluator_pic.png)
+
+**See Video Demos**
+[Desktop Demo](https://vimeo.com/361477227)
+[Mobile Demo](https://vimeo.com/361477504)
+
 ### Installation
 * Ruby 2.6.0 
 * Rails 5.2.1
@@ -33,6 +39,7 @@ Leveraged devise library to authenticate user and retrieve unique email. Leverag
 Also leveraged Fetch APi, Redux, and React to retrieve vote totals for each displayed framework. Added vote total information to framework data for display by mapping over github framework data within Dashboard component. Ensured immediate rendering without need of page refresh by taking care to provide a starting structure state.
 
 **Schema**
+![Schema Illustration](https://github.com/mjzefeldt/framework-eval/blob/master/schema.png)
 User can vote many times and each vote belongs to one user.  A vote will belong to one framework and a framework can have many votes.  Framework vote total calculated when user posts new vote in active record callback, after_commit. Schema is tightly coupled to current project and would need adjustments to scale to other types of voting rounds as an example.
 
 **Ul Design - Sorting Frameworks and Grid Presentation**
@@ -41,4 +48,7 @@ Overall framework data layout is inspired by pricing page ui psychology, present
 ### Next Steps
 Revisit polling implementation  - explore whether webhooks are available for public use, whether can make use Redux Sagas and ETags.
 Revisit Devise and authorization flow.
+
+Doing another simple layout pass to optimize for mobile.
+![Mobile-Image](https://github.com/mjzefeldt/framework-eval/blob/master/framework_evaluator_mobile_pic.png)
 
