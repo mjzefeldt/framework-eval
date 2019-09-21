@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
-// import PropTypes from "prop-types";
 import { fetchFrameworks, fetchVoteTotals } from '../store';
 import FrameworkList from './FrameworkList';
 
@@ -32,19 +31,14 @@ class Dashboard extends Component {
   }
 
   handleVoteClick(id, e) {
-    // e.target.value // or something like that - take in id of element passing in
-    const bodyData = {framework: {id}}; //id: 10270250
-    // console.log(e, '<<<e')
     e.preventDefault();
-    // console.log('hitting handleVoteClick');
+    const bodyData = {framework: {id}};
     fetch('/v1/frameworks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bodyData)
     }).then(res => {
-      // console.log(JSON.stringify(res), '<<<res from post');
-      this.props.retrieveVoteTotals(); // refresh vote_totals...
-      // this.setState({session_vote: })
+      this.props.retrieveVoteTotals();
     }).catch(err => {
       console.log('Error:', err);
     });
@@ -92,9 +86,5 @@ const mapDispatch = dispatch => ({
   retrieveFrameworks: () => dispatch(fetchFrameworks()),
   retrieveVoteTotals: () => dispatch(fetchVoteTotals())
 });
-
-// Dashboard.propTypes = {
-//   greeting: PropTypes.string
-// };
 
 export default connect(mapState, mapDispatch)(Dashboard);

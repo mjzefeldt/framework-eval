@@ -13,22 +13,45 @@
  *= require_tree .
  *= require_self
  */
+ * {
+  box-sizing: border-box;
+}
 
  html {
-   font-size: 16px;
-
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #202020;
   }
   
+  body {
+    background-color: lightgray !important;
+    margin: 0;
+  }
+
   @media screen and (min-width: 900px) {
-   body {
+   html {
      font-size: 18px;
    }
   }
 
   @media screen and (min-width: 1200px) {
-    body {
+    html {
       font-size: 20px;
     }
+  }
+
+  .header-wrapper {
+    background-color: #222629;
+    color: #FEFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 12px 12px;
+  }
+
+  .header-text {
+    margin: 0;
+    margin-left: 50px;
   }
 
   h1 {
@@ -37,4 +60,36 @@
 
   h2 {
     font-size: 2em;
+  }
+
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+  }
+  
+  .frameworks-container {
+    margin: 25px 25px; 
+  }
+
+  .col-header-style {
+    background-color: #222629 !important;
+  }
+  
+  .col-header-text {
+    color: rgb(163, 220, 84);
+  }
+
+  .col-wrapper {
+    min-width: 300px;
+  }
+
+  .sm-label {
+    font-size: 1.5em;
+    color: #707070;
+  }
+
+  .data {
+    font-size: 3em;
   }
