@@ -80,7 +80,7 @@ class Dashboard extends Component {
           open_issues_count: cur.open_issues_count
         }
         const countObj = this.props.voteTotals.find(f => f.framework_id === cur.id);
-        countObj.vote_total? newObj['vote_count'] = countObj.vote_total : newObj['vote_count'] = 0;
+        countObj.hasOwnProperty('vote_total')? newObj['vote_count'] = countObj.vote_total : newObj['vote_count'] = 0;
         acc.push(newObj);
         return acc;
       }, []);
