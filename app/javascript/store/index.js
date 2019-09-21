@@ -24,19 +24,22 @@ const getVoteTotals = data => ({
   data
 })
 
-const headers = {
-  headers: {
-    authorization: `token ${process.env.GITHUB_TOKEN_SECRET}`
-  }
-}
-// thunk creator
+// const headers = {
+  // method: 'GET',
+  // headers: {
+  //   'Authorization': `token ${process.env.GITHUB_TOKEN_SECRET}`,
+  //   'Content-Type': 'application/json'
+  // }
+// }
+
+// thunk creator 
 export const fetchFrameworks = () => {
   return (dispatch) => {
     Promise.all([
-      fetch('https://api.github.com/repos/facebook/react', headers).then(f => f.json()),
-      fetch('https://api.github.com/repos/angular/angular', headers).then(f => f.json()),
-      fetch('https://api.github.com/repos/emberjs/ember', headers).then(f => f.json()),
-      fetch('https://api.github.com/repos/vuejs/vue', headers).then(f => f.json())
+      fetch('https://api.github.com/repos/facebook/react').then(f => f.json()),
+      fetch('https://api.github.com/repos/angular/angular').then(f => f.json()),
+      fetch('https://api.github.com/repos/emberjs/ember').then(f => f.json()),
+      fetch('https://api.github.com/repos/vuejs/vue').then(f => f.json())
     ]).then(frameworks => {
       dispatch(getFrameworks(frameworks))
     }).catch(err => {

@@ -15,6 +15,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true; 
     this.props.retrieveFrameworks();
     this.props.retrieveVoteTotals();
 
@@ -32,11 +33,13 @@ class Dashboard extends Component {
       .catch(err => {
       console.log('Error:', err);
     });
-    this.dataPolling = setInterval(() => { // start data polling
-      this.props.retrieveFrameworks();
-      }, 10000
-    );
+    this.dataPolling()
   }
+
+  dataPolling = () => { setInterval(() => { // start data polling
+    this.props.retrieveFrameworks();
+    }, 60000
+  )};
 
   componentWillUnmount() {
     clearInterval(this.dataPolling); // stop data polling
@@ -70,8 +73,9 @@ class Dashboard extends Component {
 
   render () {
     let frameworks = this.props.frameworks; // let frameworks = [] as default;
-    if (this.props.frameworks.length && this.props.voteTotals.length) {
-      frameworks = this.props.frameworks.reduce((acc, cur) => {
+    if (this.props.frameworks.length > 0 && this.props.voteTotals.length > 0) {
+      // frameworks = this.props.frameworks.reduce((acc, cur) => {
+      frameworks = frameworks.reduce((acc, cur) => {
         const newObj = {
           id: cur.id,
           name: cur.name,
